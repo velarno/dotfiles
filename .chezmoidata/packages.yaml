@@ -1,0 +1,16 @@
+packages:
+  darwin:
+    brews:
+      - 'git'
+      - 'bat'
+      - 'ripgrep'
+      - 'fzf'
+      - 'eza'
+      - 'duckdb'
+      - 'neovim'
+      - 'docker'
+    casks:
+      - 'ghostty'
+      - 'zen'
+      - 'cursor'
+      - 'cyberduck'
