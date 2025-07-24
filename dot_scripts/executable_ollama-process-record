@@ -1,0 +1,64 @@
+#!/usr/bin/env -S uv run --script
+#
+# /// script
+# requires-python = ">=3.12"
+# dependencies = ["ollama"]
+# ///
+
+import ast
+import json
+import argparse
+import sys
+from ollama import chat
+
+def parse_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--model", type=str, default="llama3.2")
+    parser.add_argument("--transformations", type=str, default="")
+    parser.add_argument("--endpoint", type=str, default="http://localhost:11434")
+    parser.add_argument("--input", type=str, default="stdin")
+    parser.add_argument("--output", type=str, default="stdout")
+    return parser.parse_args()
+
+def transform_record(record: dict, transformations: list[str], model: str) -> dict:
+    prompt = f"""
+    You are a helpful assistant that transforms records. You only output the transformed record, nothing else.
+    Do not output code or instructions to create the transformed record.
+    The input is a record.
+    The output is a transformed record. The output should be a valid JSON object.
+    Your task is to perform the following transformations.
+    {transformations}
+    The input is:
+    {record}
+    The output is:
+    """
+
+    response = chat(model=model, messages=[{"role": "user", "content": prompt}])
+    try:
+        return ast.literal_eval(response.message.content)
+    except Exception as e:
+        print(f"Error: {e}")
+        print(response.message.content)
+        return None
+
+def main():
+    args = parse_args()
+    records = []
+    transformed_records = []
+    if args.input == "stdin":
+        records = json.load(sys.stdin)
+    else:
+        with open(args.input, "r") as f:
+            records = json.load(f)
+    for record in records:
+        print(record)
+        transformed_record = transform_record(record, args.transformations, args.model)
+        transformed_records.append(transformed_record)
+    if args.output == "stdout":
+        print(json.dumps(transformed_records))
+    else:
+        with open(args.output, "w") as f:
+            json.dump(transformed_records, f)
+
+if __name__ == "__main__":
+    main()
