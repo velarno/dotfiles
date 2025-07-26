@@ -22,3 +22,6 @@ gh run list --json databaseId,name,url,workflowName,updatedAt -s in_progress --j
 
 # list all assets in the github release named "main", only get names:
 gh release view main --json assets --jq ".assets.[].name"
+
+# list all past artifacts which start with some prefix, here "sqlite-database-", and get latest artifacts first
+gh api repos/velarno/openplace/actions/artifacts | jq '.artifacts | map(select(.name | startswith("sqlite-database-"))) | sort_by(.updated_at | fromdateiso8601) | reverse'
