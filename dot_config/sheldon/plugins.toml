@@ -1,0 +1,69 @@
+# `sheldon` configuration file
+# ----------------------------
+#
+# You can modify this file directly or you can use one of the following
+# `sheldon` commands which are provided to assist in editing the config file:
+#
+# - `sheldon add` to add a new plugin to the config file
+# - `sheldon edit` to open up the config file in the default editor
+# - `sheldon remove` to remove a plugin from the config file
+#
+# See the documentation for more https://github.com/rossmacarthur/sheldon#readme
+
+shell = "zsh"
+
+
+[templates]
+defer = "{{ hooks?.pre | nl }}{% for file in files %}zsh-defer source \"{{ file }}\"\n{% endfor %}{{ hooks?.post | nl }}"
+
+[plugins]
+
+[plugins.zsh-defer]
+github = "romkatv/zsh-defer"
+
+[plugins.zsh-syntax-highlighting]
+github = "zsh-users/zsh-syntax-highlighting"
+apply = ["defer"]
+
+[plugins.zsh-autosuggestions]
+github = "zsh-users/zsh-autosuggestions"
+use = ["{{ name }}.zsh"]
+
+[plugins.pure]
+github = "sindresorhus/pure"
+use = ["async.zsh", "pure.zsh"]
+
+[plugins.zsh-shift-select]
+github = "jirutka/zsh-shift-select"
+
+[plugins.zsh-bat]
+github = "fdellwing/zsh-bat"
+
+[plugins.docker-zsh-completion]
+github = "greymd/docker-zsh-completion"
+
+[plugins.zsh-fzf-finder]
+github = "leophys/zsh-plugin-fzf-finder"
+
+[plugins.zsh-jq]
+github = "reegnz/jq-zsh-plugin"
+
+[plugins.zsh-send]
+github = "robertzk/send.zsh"
+
+[plugins.zsh-uvenv]
+github = "matthiasha/zsh-uv-env"
+
+[plugins.zsh-web-search]
+github = "sineto/web-search"
+
+[plugins.zsh-completions]
+github = "zsh-users/zsh-completions"
+
+
+# For example:
+#
+# [plugins.base16]
+# github = "chriskempson/base16-shell"
+
+

@@ -9,6 +9,9 @@ packages:
       - 'duckdb'
       - 'neovim'
       - 'docker'
+      - 'sheldon'
+      - 'thefuck'
+      - 'delta'
     casks:
       - 'ghostty'
       - 'zen'

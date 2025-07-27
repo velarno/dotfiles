@@ -1,0 +1,18 @@
+eval "$(sheldon source)"
+
+# load other config files from $HOME/.config/shell
+for config_file in $HOME/.config/shell/* ; do
+  eval "source $config_file"
+done
+
+
+if type brew &>/dev/null; then
+    FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
+fi
+
+autoload -Uz compinit
+
+if [ "$(find ~/.zcompdump -mtime 1)" ] ; then
+    compinit
+fi
+compinit -C

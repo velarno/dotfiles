@@ -10,10 +10,11 @@ export PATH="$PATH:$HOME/go/bin"
 export EDITOR="/opt/homebrew/bin/nvim"
 export ZSHRC="$HOME/.zshrc"
 export ZSHENV="$HOME/.zshenv"
-# aliases
 
+# aliases
 alias llmos="llm -t oneshot"
-alias cd="z"
 alias ghwr="gh workflow run"
 alias ghwls="gh workflow list"
 alias ghgls="gh gist list"
+alias ls="eza --classify --icons --hyperlink -t modified"
+alias ll="ls -l"
